@@ -6,7 +6,14 @@ from .models import Post
 
 # root(/)
 def topPage(request):
-  print("==========views:TopPage==========")
+  print("==========TopPage==========")
   # read
-  read = Post.objects.all()
-  return render(request, "top.html", {"posts": read})
+  data = Post.objects.all()
+  return render(request, "top.html", {"posts": data})
+
+# postDetail(/slug)
+def postDetail(request, slug):
+  print("==========PostDetailPage:",slug,"==========")
+  # read detail
+  detailData = Post.objects.get(slug=slug)
+  return render(request, "post_detail.html", {"detail": detailData})

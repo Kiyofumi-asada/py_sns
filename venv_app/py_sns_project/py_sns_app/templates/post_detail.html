@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1 class="title">{{detail.title}}</h1>
+<small>投稿日時:{{detail.posted_date}}</small>
+<p>{{detail.intro}}</p>
+<p>{{detail.body}}</p>
+<a href="{{request.META.HTTP_REFERER}}">戻る</a>
+{% endblock %}

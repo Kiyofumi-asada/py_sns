@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 # views
-from py_sns_app.views import topPage
+from py_sns_app.views import topPage, postDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', topPage),
+    path('<slug:slug>/', postDetail, name="postDetail"),
 ]
