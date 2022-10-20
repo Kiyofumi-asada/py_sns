@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+# views
+from py_sns_app.views import topPage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', topPage),
 ]
