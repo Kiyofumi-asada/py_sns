@@ -20,6 +20,6 @@ from py_sns_app.views import topPage, postDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', topPage),
+    path('', topPage, name="topPage"),
     path('<slug:slug>/', postDetail, name="postDetail"),
 ]
