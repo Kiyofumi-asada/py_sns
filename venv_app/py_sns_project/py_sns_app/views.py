@@ -1,15 +1,24 @@
 from django.shortcuts import render, redirect
 from .models import Post
-from py_sns_app.forms import CommentForm
+from py_sns_app.forms import PostForm, CommentForm
 
 # Create your views here.
 
-# root(/)
+# top(/)
 def topPage(request):
   print("==========TopPage==========")
   # read
   data = Post.objects.all()
-  return render(request, "top.html", {"posts": data})
+  if request.method == "POST":
+    form = PostForm(request.POST)
+    if form.is_valid():
+      data = form.save(commit=False)
+      data.post = data
+      data.save()
+      return redirect("topPage")
+  else:
+    form=PostForm()
+  return render(request, "top.html", {"posts": data, "form":form})
 
 # postDetail(/slug)
 def postDetail(request, slug):
@@ -18,15 +27,11 @@ def postDetail(request, slug):
   post = Post.objects.get(slug=slug)
   if request.method == "POST":
     form = CommentForm(request.POST)
-    print("form",form)
-    print("form.is_valid",form.is_valid())
     if form.is_valid():
-      comment = form.save(commit=False)
-      comment.post = post
-      comment.save()
-      print("comment",comment)
+      data = form.save(commit=False)
+      data.post = post
+      data.save()
       return redirect("postDetail", slug=post.slug)
   else:
     form=CommentForm()
-    print("form",form)
   return render(request, "post_detail.html", {"post": post, "form":form})
